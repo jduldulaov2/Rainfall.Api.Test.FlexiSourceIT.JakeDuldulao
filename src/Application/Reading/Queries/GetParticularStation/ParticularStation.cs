@@ -9,12 +9,12 @@ using Rainfall.Api.Application.Common.Interfaces;
 
 namespace Rainfall.Api.Application.Reading.Queries.GetParticularStation;
 
-public record ParticularStationQuery : IRequest<string>
+public record ParticularStationQuery : IRequest<ParticularStationDto>
 {
     public long StationId { get; init; }
 }
 
-public class GetSystemEnvironmentHandler : IRequestHandler<ParticularStationQuery, string>
+public class GetSystemEnvironmentHandler : IRequestHandler<ParticularStationQuery, ParticularStationDto>
 {
     private readonly IRainfallReadingExternal _rainfall;
 
@@ -23,7 +23,7 @@ public class GetSystemEnvironmentHandler : IRequestHandler<ParticularStationQuer
         _rainfall = rainfall;
     }
 
-    public async Task<string> Handle(ParticularStationQuery request, CancellationToken cancellationToken)
+    public async Task<ParticularStationDto> Handle(ParticularStationQuery request, CancellationToken cancellationToken)
     {
         var result = await _rainfall.GetParticularStationById(request.StationId);
 

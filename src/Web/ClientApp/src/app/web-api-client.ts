@@ -16,7 +16,7 @@ import { HttpClient, HttpHeaders, HttpResponse, HttpResponseBase } from '@angula
 export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
 
 export interface IRainfallClient {
-    getParticularStation(stationId: number): Observable<string>;
+    getParticularStation(stationId: number): Observable<ParticularStationDto>;
 }
 
 @Injectable({
@@ -32,7 +32,7 @@ export class RainfallClient implements IRainfallClient {
         this.baseUrl = baseUrl ?? "";
     }
 
-    getParticularStation(stationId: number): Observable<string> {
+    getParticularStation(stationId: number): Observable<ParticularStationDto> {
         let url_ = this.baseUrl + "/api/Rainfall/id/{StationId}/readings";
         if (stationId === undefined || stationId === null)
             throw new Error("The parameter 'stationId' must be defined.");
@@ -54,14 +54,14 @@ export class RainfallClient implements IRainfallClient {
                 try {
                     return this.processGetParticularStation(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<string>;
+                    return _observableThrow(e) as any as Observable<ParticularStationDto>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<string>;
+                return _observableThrow(response_) as any as Observable<ParticularStationDto>;
         }));
     }
 
-    protected processGetParticularStation(response: HttpResponseBase): Observable<string> {
+    protected processGetParticularStation(response: HttpResponseBase): Observable<ParticularStationDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -72,8 +72,7 @@ export class RainfallClient implements IRainfallClient {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-                result200 = resultData200 !== undefined ? resultData200 : <any>null;
-    
+            result200 = ParticularStationDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -83,6 +82,42 @@ export class RainfallClient implements IRainfallClient {
         }
         return _observableOf(null as any);
     }
+}
+
+export class ParticularStationDto implements IParticularStationDto {
+    content?: string | undefined;
+
+    constructor(data?: IParticularStationDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.content = _data["content"];
+        }
+    }
+
+    static fromJS(data: any): ParticularStationDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ParticularStationDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["content"] = this.content;
+        return data;
+    }
+}
+
+export interface IParticularStationDto {
+    content?: string | undefined;
 }
 
 export class SwaggerException extends Error {

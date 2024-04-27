@@ -11,7 +11,7 @@ public class Rainfall : EndpointGroupBase
             .MapGet(GetParticularStation, "id/{StationId}/readings");
     }
 
-    public async Task<string> GetParticularStation(ISender sender, [AsParameters] ParticularStationQuery query)
+    public async Task<ParticularStationDto> GetParticularStation(ISender sender, [AsParameters] ParticularStationQuery query)
     {
         return await sender.Send(query);
     }

@@ -30,7 +30,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "string"
+                  "$ref": "#/components/schemas/ParticularStationDto"
                 }
               }
             }
@@ -39,5 +39,18 @@
       }
     }
   },
-  "components": {}
+  "components": {
+    "schemas": {
+      "ParticularStationDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "content": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      }
+    }
+  }
 }
