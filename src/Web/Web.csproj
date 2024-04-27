@@ -47,7 +47,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Endpoints\" />
     <Folder Include="logs\" />
   </ItemGroup>
 

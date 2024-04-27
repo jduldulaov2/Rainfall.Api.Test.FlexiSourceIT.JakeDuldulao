@@ -2,6 +2,7 @@
 using Rainfall.Api.Application.Common.Interfaces;
 using Rainfall.Api.Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
+using Rainfall.Api.Infrastructure.RainfallReading;
 
 
 namespace Microsoft.Extensions.DependencyInjection;
@@ -11,6 +12,8 @@ public static class DependencyInjection
     public static IServiceCollection AddWebServices(this IServiceCollection services)
     {
         services.AddDatabaseDeveloperPageExceptionFilter();
+
+        services.AddScoped<IRainfallReadingExternal, RainfallReadingExternal>();
 
         services.AddHttpContextAccessor();
 
