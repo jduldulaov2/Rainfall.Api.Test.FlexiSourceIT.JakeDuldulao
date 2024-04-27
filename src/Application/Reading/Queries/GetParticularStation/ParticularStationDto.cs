@@ -10,7 +10,10 @@ public class ParticularStationDto
 {
     [JsonProperty(PropertyName = "@context")]
     public string? @context { get; set; }
-    public MetaDto? meta {  get; set; }
 
-    public ItemsDto? items { get; set; }
+    [JsonProperty(PropertyName = "meta")]
+    public MetaDto? Meta {  get; set; }
+
+    [JsonProperty(PropertyName = "items")]
+    public ItemsDto? Items { get; set; }
 }

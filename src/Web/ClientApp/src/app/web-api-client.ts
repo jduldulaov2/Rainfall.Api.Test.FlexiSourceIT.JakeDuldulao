@@ -239,11 +239,15 @@ export interface IMetaDto {
 export class ItemsDto implements IItemsDto {
     id?: string | undefined;
     eaRegionName?: string | undefined;
-    easting?: string | undefined;
+    eAsting?: string | undefined;
     gridReference?: string | undefined;
-    label?: string | undefined;
-    lat?: string | undefined;
+    labelItem?: string | undefined;
+    latitude?: string | undefined;
     longitude?: string | undefined;
+    northing?: string | undefined;
+    notation?: string | undefined;
+    stationReference?: string | undefined;
+    type?: string | undefined;
 
     constructor(data?: IItemsDto) {
         if (data) {
@@ -258,11 +262,15 @@ export class ItemsDto implements IItemsDto {
         if (_data) {
             this.id = _data["id"];
             this.eaRegionName = _data["eaRegionName"];
-            this.easting = _data["easting"];
+            this.eAsting = _data["eAsting"];
             this.gridReference = _data["gridReference"];
-            this.label = _data["label"];
-            this.lat = _data["lat"];
+            this.labelItem = _data["labelItem"];
+            this.latitude = _data["latitude"];
             this.longitude = _data["longitude"];
+            this.northing = _data["northing"];
+            this.notation = _data["notation"];
+            this.stationReference = _data["stationReference"];
+            this.type = _data["type"];
         }
     }
 
@@ -277,11 +285,15 @@ export class ItemsDto implements IItemsDto {
         data = typeof data === 'object' ? data : {};
         data["id"] = this.id;
         data["eaRegionName"] = this.eaRegionName;
-        data["easting"] = this.easting;
+        data["eAsting"] = this.eAsting;
         data["gridReference"] = this.gridReference;
-        data["label"] = this.label;
-        data["lat"] = this.lat;
+        data["labelItem"] = this.labelItem;
+        data["latitude"] = this.latitude;
         data["longitude"] = this.longitude;
+        data["northing"] = this.northing;
+        data["notation"] = this.notation;
+        data["stationReference"] = this.stationReference;
+        data["type"] = this.type;
         return data;
     }
 }
@@ -289,11 +301,15 @@ export class ItemsDto implements IItemsDto {
 export interface IItemsDto {
     id?: string | undefined;
     eaRegionName?: string | undefined;
-    easting?: string | undefined;
+    eAsting?: string | undefined;
     gridReference?: string | undefined;
-    label?: string | undefined;
-    lat?: string | undefined;
+    labelItem?: string | undefined;
+    latitude?: string | undefined;
     longitude?: string | undefined;
+    northing?: string | undefined;
+    notation?: string | undefined;
+    stationReference?: string | undefined;
+    type?: string | undefined;
 }
 
 export enum ResultType {

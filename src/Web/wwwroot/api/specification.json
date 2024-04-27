@@ -132,7 +132,7 @@
             "type": "string",
             "nullable": true
           },
-          "easting": {
+          "eAsting": {
             "type": "string",
             "nullable": true
           },
@@ -140,15 +140,31 @@
             "type": "string",
             "nullable": true
           },
-          "label": {
+          "labelItem": {
             "type": "string",
             "nullable": true
           },
-          "lat": {
+          "latitude": {
             "type": "string",
             "nullable": true
           },
           "longitude": {
+            "type": "string",
+            "nullable": true
+          },
+          "northing": {
+            "type": "string",
+            "nullable": true
+          },
+          "notation": {
+            "type": "string",
+            "nullable": true
+          },
+          "stationReference": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
             "type": "string",
             "nullable": true
           }

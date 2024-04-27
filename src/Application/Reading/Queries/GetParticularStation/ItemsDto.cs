@@ -12,16 +12,35 @@ public class ItemsDto
     [JsonProperty(PropertyName = "@id")]
     public string? Id { get; set; }
 
-    public string? eaRegionName { get; set; }
+    [JsonProperty(PropertyName = "eaRegionName")]
+    public string? EARegionName { get; set; }
 
-    public string? easting { get; set; }
+    [JsonProperty(PropertyName = "easting")]
+    public string? EAsting { get; set; }
 
-    public string? gridReference { get; set; }
+    [JsonProperty(PropertyName = "gridReference")]
+    public string? GridReference { get; set; }
 
-    public string? label { get; set; }
+    [JsonProperty(PropertyName = "label")]
+    public string? LabelItem { get; set; }
 
-    public string? lat { get; set; }
+    [JsonProperty(PropertyName = "lat")]
+    public string? Latitude { get; set; }
 
     [JsonProperty(PropertyName = "long")]
     public string? longitude { get; set; }
+
+    // List for Results
+
+    [JsonProperty(PropertyName = "northing")]
+    public string? Northing { get; set; }
+
+    [JsonProperty(PropertyName = "notation")]
+    public string? Notation { get; set; }
+
+    [JsonProperty(PropertyName = "stationReference")]
+    public string? StationReference { get; set; }
+
+    [JsonProperty(PropertyName = "type")]
+    public string? Type { get; set; }
 }

@@ -3,19 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace Rainfall.Api.Application.Reading.Queries.GetParticularStation;
 public class MetaDto
 {
-    public string? publisher { get; set; }
+    [JsonProperty(PropertyName = "publisher")]
+    public string? Publisher { get; set; }
 
-    public string? license { get; set; }
+    [JsonProperty(PropertyName = "license")]
+    public string? License { get; set; }
 
-    public string? documentation { get; set; }
+    [JsonProperty(PropertyName = "documentation")]
+    public string? Documentation { get; set; }
 
-    public string? version { get; set; }
+    [JsonProperty(PropertyName = "version")]
+    public string? Version { get; set; }
 
-    public string? comment { get; set; }
+    [JsonProperty(PropertyName = "comment")]
+    public string? Comment { get; set; }
 
+    [JsonProperty(PropertyName = "hasFormat")]
     public string[]? hasFormat { get; set; }
 }
