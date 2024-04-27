@@ -23,7 +23,9 @@ public class RainfallReadingExternal : IRainfallReadingExternal
     public async Task<Result<ParticularStationDto>> GetParticularStationById(long stationid)
     {
         var client = new RestClient($"https://environment.data.gov.uk/flood-monitoring/id/stations/{stationid}");
+
         var request = new RestRequest();
+
         RestResponse response = await client.ExecuteAsync(request);
 
         if (response.StatusCode == HttpStatusCode.OK)
