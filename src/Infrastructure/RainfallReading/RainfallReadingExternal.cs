@@ -26,15 +26,26 @@ public class RainfallReadingExternal : IRainfallReadingExternal
         var request = new RestRequest();
         RestResponse response = await client.ExecuteAsync(request);
 
-        request.AddHeader("Accept", "application/json");
+        if (response.StatusCode == HttpStatusCode.OK)
+        {
+            request.AddHeader("Accept", "application/json");
 
-        ParticularStationDto? rainFallObj = JsonConvert.DeserializeObject<ParticularStationDto>(response.Content!);
+            ParticularStationDto? rainFallObj = JsonConvert.DeserializeObject<ParticularStationDto>(response.Content!);
+
+            return new()
+            {
+                Data = rainFallObj!,
+                Message = "Records Found.",
+                ResultType = ResultType.Success,
+            };
+        }
 
         return new()
         {
-            Data = rainFallObj!,
-            Message = "Records Found.",
-            ResultType = ResultType.Success,
+            Data = new ParticularStationDto { },
+            Message = "Rainfall Record/s Not Found.",
+            ResultType = ResultType.Error,
         };
+
     }
 }

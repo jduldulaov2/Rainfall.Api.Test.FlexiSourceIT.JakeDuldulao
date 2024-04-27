@@ -228,6 +228,18 @@
             "items": {
               "type": "string"
             }
+          },
+          "unit": {
+            "type": "string",
+            "nullable": true
+          },
+          "unitName": {
+            "type": "string",
+            "nullable": true
+          },
+          "valueType": {
+            "type": "string",
+            "nullable": true
           }
         }
       },

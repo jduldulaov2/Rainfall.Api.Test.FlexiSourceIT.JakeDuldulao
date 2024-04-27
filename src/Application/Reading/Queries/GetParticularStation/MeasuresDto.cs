@@ -37,4 +37,13 @@ public class MeasuresDto
 
     [JsonProperty(PropertyName = "type")]
     public string[]? Type { get; set; }
+
+    [JsonProperty(PropertyName = "unit")]
+    public string? Unit { get; set; }
+
+    [JsonProperty(PropertyName = "unitName")]
+    public string? UnitName { get; set; }
+
+    [JsonProperty(PropertyName = "valueType")]
+    public string? ValueType { get; set; }
 }

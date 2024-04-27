@@ -335,6 +335,9 @@ export class MeasuresDto implements IMeasuresDto {
     station?: string | undefined;
     stationReference?: string | undefined;
     type?: string[] | undefined;
+    unit?: string | undefined;
+    unitName?: string | undefined;
+    valueType?: string | undefined;
 
     constructor(data?: IMeasuresDto) {
         if (data) {
@@ -361,6 +364,9 @@ export class MeasuresDto implements IMeasuresDto {
                 for (let item of _data["type"])
                     this.type!.push(item);
             }
+            this.unit = _data["unit"];
+            this.unitName = _data["unitName"];
+            this.valueType = _data["valueType"];
         }
     }
 
@@ -387,6 +393,9 @@ export class MeasuresDto implements IMeasuresDto {
             for (let item of this.type)
                 data["type"].push(item);
         }
+        data["unit"] = this.unit;
+        data["unitName"] = this.unitName;
+        data["valueType"] = this.valueType;
         return data;
     }
 }
@@ -402,6 +411,9 @@ export interface IMeasuresDto {
     station?: string | undefined;
     stationReference?: string | undefined;
     type?: string[] | undefined;
+    unit?: string | undefined;
+    unitName?: string | undefined;
+    valueType?: string | undefined;
 }
 
 export class LatestReadingDto implements ILatestReadingDto {
