@@ -16,4 +16,6 @@ public class MetaDto
     public string? version { get; set; }
 
     public string? comment { get; set; }
+
+    public string[]? hasFormat { get; set; }
 }

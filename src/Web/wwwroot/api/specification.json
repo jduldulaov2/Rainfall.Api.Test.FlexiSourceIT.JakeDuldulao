@@ -76,6 +76,14 @@
                 "$ref": "#/components/schemas/MetaDto"
               }
             ]
+          },
+          "items": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ItemsDto"
+              }
+            ]
           }
         }
       },
@@ -100,6 +108,47 @@
             "nullable": true
           },
           "comment": {
+            "type": "string",
+            "nullable": true
+          },
+          "hasFormat": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ItemsDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "eaRegionName": {
+            "type": "string",
+            "nullable": true
+          },
+          "easting": {
+            "type": "string",
+            "nullable": true
+          },
+          "gridReference": {
+            "type": "string",
+            "nullable": true
+          },
+          "label": {
+            "type": "string",
+            "nullable": true
+          },
+          "lat": {
+            "type": "string",
+            "nullable": true
+          },
+          "longitude": {
             "type": "string",
             "nullable": true
           }

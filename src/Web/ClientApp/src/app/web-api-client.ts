@@ -131,6 +131,7 @@ export interface IResultOfParticularStationDto {
 export class ParticularStationDto implements IParticularStationDto {
     context?: string | undefined;
     meta?: MetaDto | undefined;
+    items?: ItemsDto | undefined;
 
     constructor(data?: IParticularStationDto) {
         if (data) {
@@ -145,6 +146,7 @@ export class ParticularStationDto implements IParticularStationDto {
         if (_data) {
             this.context = _data["context"];
             this.meta = _data["meta"] ? MetaDto.fromJS(_data["meta"]) : <any>undefined;
+            this.items = _data["items"] ? ItemsDto.fromJS(_data["items"]) : <any>undefined;
         }
     }
 
@@ -159,6 +161,7 @@ export class ParticularStationDto implements IParticularStationDto {
         data = typeof data === 'object' ? data : {};
         data["context"] = this.context;
         data["meta"] = this.meta ? this.meta.toJSON() : <any>undefined;
+        data["items"] = this.items ? this.items.toJSON() : <any>undefined;
         return data;
     }
 }
@@ -166,6 +169,7 @@ export class ParticularStationDto implements IParticularStationDto {
 export interface IParticularStationDto {
     context?: string | undefined;
     meta?: MetaDto | undefined;
+    items?: ItemsDto | undefined;
 }
 
 export class MetaDto implements IMetaDto {
@@ -174,6 +178,7 @@ export class MetaDto implements IMetaDto {
     documentation?: string | undefined;
     version?: string | undefined;
     comment?: string | undefined;
+    hasFormat?: string[] | undefined;
 
     constructor(data?: IMetaDto) {
         if (data) {
@@ -191,6 +196,11 @@ export class MetaDto implements IMetaDto {
             this.documentation = _data["documentation"];
             this.version = _data["version"];
             this.comment = _data["comment"];
+            if (Array.isArray(_data["hasFormat"])) {
+                this.hasFormat = [] as any;
+                for (let item of _data["hasFormat"])
+                    this.hasFormat!.push(item);
+            }
         }
     }
 
@@ -208,6 +218,11 @@ export class MetaDto implements IMetaDto {
         data["documentation"] = this.documentation;
         data["version"] = this.version;
         data["comment"] = this.comment;
+        if (Array.isArray(this.hasFormat)) {
+            data["hasFormat"] = [];
+            for (let item of this.hasFormat)
+                data["hasFormat"].push(item);
+        }
         return data;
     }
 }
@@ -218,6 +233,67 @@ export interface IMetaDto {
     documentation?: string | undefined;
     version?: string | undefined;
     comment?: string | undefined;
+    hasFormat?: string[] | undefined;
+}
+
+export class ItemsDto implements IItemsDto {
+    id?: string | undefined;
+    eaRegionName?: string | undefined;
+    easting?: string | undefined;
+    gridReference?: string | undefined;
+    label?: string | undefined;
+    lat?: string | undefined;
+    longitude?: string | undefined;
+
+    constructor(data?: IItemsDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.eaRegionName = _data["eaRegionName"];
+            this.easting = _data["easting"];
+            this.gridReference = _data["gridReference"];
+            this.label = _data["label"];
+            this.lat = _data["lat"];
+            this.longitude = _data["longitude"];
+        }
+    }
+
+    static fromJS(data: any): ItemsDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ItemsDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["eaRegionName"] = this.eaRegionName;
+        data["easting"] = this.easting;
+        data["gridReference"] = this.gridReference;
+        data["label"] = this.label;
+        data["lat"] = this.lat;
+        data["longitude"] = this.longitude;
+        return data;
+    }
+}
+
+export interface IItemsDto {
+    id?: string | undefined;
+    eaRegionName?: string | undefined;
+    easting?: string | undefined;
+    gridReference?: string | undefined;
+    label?: string | undefined;
+    lat?: string | undefined;
+    longitude?: string | undefined;
 }
 
 export enum ResultType {
