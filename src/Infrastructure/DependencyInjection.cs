@@ -1,5 +1,4 @@
 ﻿using Rainfall.Api.Application.Common.Interfaces;
-using Rainfall.Api.Domain.Constants;
 using Rainfall.Api.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -25,9 +24,6 @@ public static class DependencyInjection
         services.AddScoped<DbContext>(provider => provider.GetRequiredService<DbContext>());
 
         services.AddSingleton(TimeProvider.System);
-
-        services.AddAuthorization(options =>
-            options.AddPolicy(Policies.CanPurge, policy => policy.RequireRole(Roles.Administrator)));
 
         return services;
     }
