@@ -16,7 +16,7 @@ import { HttpClient, HttpHeaders, HttpResponse, HttpResponseBase } from '@angula
 export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
 
 export interface IRainfallClient {
-    getParticularStation(stationId: number): Observable<ParticularStationDto>;
+    getParticularStation(stationId: number): Observable<ResultOfParticularStationDto>;
 }
 
 @Injectable({
@@ -32,7 +32,7 @@ export class RainfallClient implements IRainfallClient {
         this.baseUrl = baseUrl ?? "";
     }
 
-    getParticularStation(stationId: number): Observable<ParticularStationDto> {
+    getParticularStation(stationId: number): Observable<ResultOfParticularStationDto> {
         let url_ = this.baseUrl + "/api/Rainfall/id/{StationId}/readings";
         if (stationId === undefined || stationId === null)
             throw new Error("The parameter 'stationId' must be defined.");
@@ -54,14 +54,14 @@ export class RainfallClient implements IRainfallClient {
                 try {
                     return this.processGetParticularStation(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<ParticularStationDto>;
+                    return _observableThrow(e) as any as Observable<ResultOfParticularStationDto>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<ParticularStationDto>;
+                return _observableThrow(response_) as any as Observable<ResultOfParticularStationDto>;
         }));
     }
 
-    protected processGetParticularStation(response: HttpResponseBase): Observable<ParticularStationDto> {
+    protected processGetParticularStation(response: HttpResponseBase): Observable<ResultOfParticularStationDto> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -72,7 +72,7 @@ export class RainfallClient implements IRainfallClient {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
             let result200: any = null;
             let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
-            result200 = ParticularStationDto.fromJS(resultData200);
+            result200 = ResultOfParticularStationDto.fromJS(resultData200);
             return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
@@ -84,8 +84,53 @@ export class RainfallClient implements IRainfallClient {
     }
 }
 
+export class ResultOfParticularStationDto implements IResultOfParticularStationDto {
+    data?: ParticularStationDto | undefined;
+    message?: string;
+    resultType?: ResultType;
+
+    constructor(data?: IResultOfParticularStationDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.data = _data["data"] ? ParticularStationDto.fromJS(_data["data"]) : <any>undefined;
+            this.message = _data["message"];
+            this.resultType = _data["resultType"];
+        }
+    }
+
+    static fromJS(data: any): ResultOfParticularStationDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new ResultOfParticularStationDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["data"] = this.data ? this.data.toJSON() : <any>undefined;
+        data["message"] = this.message;
+        data["resultType"] = this.resultType;
+        return data;
+    }
+}
+
+export interface IResultOfParticularStationDto {
+    data?: ParticularStationDto | undefined;
+    message?: string;
+    resultType?: ResultType;
+}
+
 export class ParticularStationDto implements IParticularStationDto {
-    content?: string | undefined;
+    context?: string | undefined;
+    meta?: MetaDto | undefined;
 
     constructor(data?: IParticularStationDto) {
         if (data) {
@@ -98,7 +143,8 @@ export class ParticularStationDto implements IParticularStationDto {
 
     init(_data?: any) {
         if (_data) {
-            this.content = _data["content"];
+            this.context = _data["context"];
+            this.meta = _data["meta"] ? MetaDto.fromJS(_data["meta"]) : <any>undefined;
         }
     }
 
@@ -111,13 +157,74 @@ export class ParticularStationDto implements IParticularStationDto {
 
     toJSON(data?: any) {
         data = typeof data === 'object' ? data : {};
-        data["content"] = this.content;
+        data["context"] = this.context;
+        data["meta"] = this.meta ? this.meta.toJSON() : <any>undefined;
         return data;
     }
 }
 
 export interface IParticularStationDto {
-    content?: string | undefined;
+    context?: string | undefined;
+    meta?: MetaDto | undefined;
+}
+
+export class MetaDto implements IMetaDto {
+    publisher?: string | undefined;
+    license?: string | undefined;
+    documentation?: string | undefined;
+    version?: string | undefined;
+    comment?: string | undefined;
+
+    constructor(data?: IMetaDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.publisher = _data["publisher"];
+            this.license = _data["license"];
+            this.documentation = _data["documentation"];
+            this.version = _data["version"];
+            this.comment = _data["comment"];
+        }
+    }
+
+    static fromJS(data: any): MetaDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new MetaDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["publisher"] = this.publisher;
+        data["license"] = this.license;
+        data["documentation"] = this.documentation;
+        data["version"] = this.version;
+        data["comment"] = this.comment;
+        return data;
+    }
+}
+
+export interface IMetaDto {
+    publisher?: string | undefined;
+    license?: string | undefined;
+    documentation?: string | undefined;
+    version?: string | undefined;
+    comment?: string | undefined;
+}
+
+export enum ResultType {
+    Success = 1,
+    Warning = 2,
+    Error = 3,
+    Information = 4,
 }
 
 export class SwaggerException extends Error {

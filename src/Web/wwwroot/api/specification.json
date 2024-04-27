@@ -30,7 +30,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ParticularStationDto"
+                  "$ref": "#/components/schemas/ResultOfParticularStationDto"
                 }
               }
             }
@@ -41,15 +41,85 @@
   },
   "components": {
     "schemas": {
+      "ResultOfParticularStationDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ParticularStationDto"
+              }
+            ]
+          },
+          "message": {
+            "type": "string"
+          },
+          "resultType": {
+            "$ref": "#/components/schemas/ResultType"
+          }
+        }
+      },
       "ParticularStationDto": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
-          "content": {
+          "context": {
+            "type": "string",
+            "nullable": true
+          },
+          "meta": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/MetaDto"
+              }
+            ]
+          }
+        }
+      },
+      "MetaDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "publisher": {
+            "type": "string",
+            "nullable": true
+          },
+          "license": {
+            "type": "string",
+            "nullable": true
+          },
+          "documentation": {
+            "type": "string",
+            "nullable": true
+          },
+          "version": {
+            "type": "string",
+            "nullable": true
+          },
+          "comment": {
             "type": "string",
             "nullable": true
           }
         }
+      },
+      "ResultType": {
+        "type": "integer",
+        "description": "",
+        "x-enumNames": [
+          "Success",
+          "Warning",
+          "Error",
+          "Information"
+        ],
+        "enum": [
+          1,
+          2,
+          3,
+          4
+        ]
       }
     }
   }
