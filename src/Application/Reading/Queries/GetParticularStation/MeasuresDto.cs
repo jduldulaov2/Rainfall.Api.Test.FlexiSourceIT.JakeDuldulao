@@ -16,4 +16,25 @@ public class MeasuresDto
 
     [JsonProperty(PropertyName = "latestReading")]
     public LatestReadingDto? LatestReading { get; set; }
+
+    [JsonProperty(PropertyName = "notation")]
+    public string? Notation { get; set; }
+
+    [JsonProperty(PropertyName = "parameter")]
+    public string? Parameter { get; set; }
+
+    [JsonProperty(PropertyName = "period")]
+    public int? Period { get; set; }
+
+    [JsonProperty(PropertyName = "qualifier")]
+    public string? Qualifier { get; set; }
+
+    [JsonProperty(PropertyName = "station")]
+    public string? Station { get; set; }
+
+    [JsonProperty(PropertyName = "stationReference")]
+    public string? StationReference { get; set; }
+
+    [JsonProperty(PropertyName = "type")]
+    public string[]? Type { get; set; }
 }

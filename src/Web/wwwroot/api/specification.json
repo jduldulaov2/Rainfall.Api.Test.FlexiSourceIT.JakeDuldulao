@@ -196,6 +196,38 @@
                 "$ref": "#/components/schemas/LatestReadingDto"
               }
             ]
+          },
+          "notation": {
+            "type": "string",
+            "nullable": true
+          },
+          "parameter": {
+            "type": "string",
+            "nullable": true
+          },
+          "period": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "qualifier": {
+            "type": "string",
+            "nullable": true
+          },
+          "station": {
+            "type": "string",
+            "nullable": true
+          },
+          "stationReference": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
           }
         }
       },

@@ -328,6 +328,13 @@ export class MeasuresDto implements IMeasuresDto {
     id?: string | undefined;
     label?: string | undefined;
     latestReading?: LatestReadingDto | undefined;
+    notation?: string | undefined;
+    parameter?: string | undefined;
+    period?: number | undefined;
+    qualifier?: string | undefined;
+    station?: string | undefined;
+    stationReference?: string | undefined;
+    type?: string[] | undefined;
 
     constructor(data?: IMeasuresDto) {
         if (data) {
@@ -343,6 +350,17 @@ export class MeasuresDto implements IMeasuresDto {
             this.id = _data["id"];
             this.label = _data["label"];
             this.latestReading = _data["latestReading"] ? LatestReadingDto.fromJS(_data["latestReading"]) : <any>undefined;
+            this.notation = _data["notation"];
+            this.parameter = _data["parameter"];
+            this.period = _data["period"];
+            this.qualifier = _data["qualifier"];
+            this.station = _data["station"];
+            this.stationReference = _data["stationReference"];
+            if (Array.isArray(_data["type"])) {
+                this.type = [] as any;
+                for (let item of _data["type"])
+                    this.type!.push(item);
+            }
         }
     }
 
@@ -358,6 +376,17 @@ export class MeasuresDto implements IMeasuresDto {
         data["id"] = this.id;
         data["label"] = this.label;
         data["latestReading"] = this.latestReading ? this.latestReading.toJSON() : <any>undefined;
+        data["notation"] = this.notation;
+        data["parameter"] = this.parameter;
+        data["period"] = this.period;
+        data["qualifier"] = this.qualifier;
+        data["station"] = this.station;
+        data["stationReference"] = this.stationReference;
+        if (Array.isArray(this.type)) {
+            data["type"] = [];
+            for (let item of this.type)
+                data["type"].push(item);
+        }
         return data;
     }
 }
@@ -366,6 +395,13 @@ export interface IMeasuresDto {
     id?: string | undefined;
     label?: string | undefined;
     latestReading?: LatestReadingDto | undefined;
+    notation?: string | undefined;
+    parameter?: string | undefined;
+    period?: number | undefined;
+    qualifier?: string | undefined;
+    station?: string | undefined;
+    stationReference?: string | undefined;
+    type?: string[] | undefined;
 }
 
 export class LatestReadingDto implements ILatestReadingDto {
