@@ -28,11 +28,11 @@ public class RainfallReadingExternal : IRainfallReadingExternal
 
         request.AddHeader("Accept", "application/json");
 
-        ParticularStationDto? userObj = JsonConvert.DeserializeObject<ParticularStationDto>(response.Content!);
+        ParticularStationDto? rainFallObj = JsonConvert.DeserializeObject<ParticularStationDto>(response.Content!);
 
         return new()
         {
-            Data = userObj!,
+            Data = rainFallObj!,
             Message = "Records Found.",
             ResultType = ResultType.Success,
         };

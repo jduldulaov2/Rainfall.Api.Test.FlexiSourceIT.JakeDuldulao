@@ -30,7 +30,8 @@ public class ItemsDto
     [JsonProperty(PropertyName = "long")]
     public string? longitude { get; set; }
 
-    // List for Results
+    [JsonProperty(PropertyName = "measures")]
+    public List<MeasuresDto>? Measures { get; set; }
 
     [JsonProperty(PropertyName = "northing")]
     public string? Northing { get; set; }

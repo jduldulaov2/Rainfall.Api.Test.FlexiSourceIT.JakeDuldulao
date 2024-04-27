@@ -244,6 +244,7 @@ export class ItemsDto implements IItemsDto {
     labelItem?: string | undefined;
     latitude?: string | undefined;
     longitude?: string | undefined;
+    measures?: MeasuresDto[] | undefined;
     northing?: string | undefined;
     notation?: string | undefined;
     stationReference?: string | undefined;
@@ -267,6 +268,11 @@ export class ItemsDto implements IItemsDto {
             this.labelItem = _data["labelItem"];
             this.latitude = _data["latitude"];
             this.longitude = _data["longitude"];
+            if (Array.isArray(_data["measures"])) {
+                this.measures = [] as any;
+                for (let item of _data["measures"])
+                    this.measures!.push(MeasuresDto.fromJS(item));
+            }
             this.northing = _data["northing"];
             this.notation = _data["notation"];
             this.stationReference = _data["stationReference"];
@@ -290,6 +296,11 @@ export class ItemsDto implements IItemsDto {
         data["labelItem"] = this.labelItem;
         data["latitude"] = this.latitude;
         data["longitude"] = this.longitude;
+        if (Array.isArray(this.measures)) {
+            data["measures"] = [];
+            for (let item of this.measures)
+                data["measures"].push(item.toJSON());
+        }
         data["northing"] = this.northing;
         data["notation"] = this.notation;
         data["stationReference"] = this.stationReference;
@@ -306,10 +317,107 @@ export interface IItemsDto {
     labelItem?: string | undefined;
     latitude?: string | undefined;
     longitude?: string | undefined;
+    measures?: MeasuresDto[] | undefined;
     northing?: string | undefined;
     notation?: string | undefined;
     stationReference?: string | undefined;
     type?: string | undefined;
+}
+
+export class MeasuresDto implements IMeasuresDto {
+    id?: string | undefined;
+    label?: string | undefined;
+    latestReading?: LatestReadingDto | undefined;
+
+    constructor(data?: IMeasuresDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.label = _data["label"];
+            this.latestReading = _data["latestReading"] ? LatestReadingDto.fromJS(_data["latestReading"]) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): MeasuresDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new MeasuresDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["label"] = this.label;
+        data["latestReading"] = this.latestReading ? this.latestReading.toJSON() : <any>undefined;
+        return data;
+    }
+}
+
+export interface IMeasuresDto {
+    id?: string | undefined;
+    label?: string | undefined;
+    latestReading?: LatestReadingDto | undefined;
+}
+
+export class LatestReadingDto implements ILatestReadingDto {
+    id?: string | undefined;
+    date?: string | undefined;
+    dateTime?: string | undefined;
+    measure?: string | undefined;
+    value?: number;
+
+    constructor(data?: ILatestReadingDto) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.date = _data["date"];
+            this.dateTime = _data["dateTime"];
+            this.measure = _data["measure"];
+            this.value = _data["value"];
+        }
+    }
+
+    static fromJS(data: any): LatestReadingDto {
+        data = typeof data === 'object' ? data : {};
+        let result = new LatestReadingDto();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["date"] = this.date;
+        data["dateTime"] = this.dateTime;
+        data["measure"] = this.measure;
+        data["value"] = this.value;
+        return data;
+    }
+}
+
+export interface ILatestReadingDto {
+    id?: string | undefined;
+    date?: string | undefined;
+    dateTime?: string | undefined;
+    measure?: string | undefined;
+    value?: number;
 }
 
 export enum ResultType {

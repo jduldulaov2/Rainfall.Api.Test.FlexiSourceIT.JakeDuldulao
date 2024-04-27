@@ -152,6 +152,13 @@
             "type": "string",
             "nullable": true
           },
+          "measures": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/MeasuresDto"
+            }
+          },
           "northing": {
             "type": "string",
             "nullable": true
@@ -167,6 +174,54 @@
           "type": {
             "type": "string",
             "nullable": true
+          }
+        }
+      },
+      "MeasuresDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "label": {
+            "type": "string",
+            "nullable": true
+          },
+          "latestReading": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/LatestReadingDto"
+              }
+            ]
+          }
+        }
+      },
+      "LatestReadingDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "date": {
+            "type": "string",
+            "nullable": true
+          },
+          "dateTime": {
+            "type": "string",
+            "nullable": true
+          },
+          "measure": {
+            "type": "string",
+            "nullable": true
+          },
+          "value": {
+            "type": "number",
+            "format": "decimal"
           }
         }
       },
